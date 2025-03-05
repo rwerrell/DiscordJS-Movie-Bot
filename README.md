@@ -6,4 +6,4 @@ A Simple discord bot that allows users to add and edit an existing movie list on
     - No database involved.
 
 # Framework
-[- Discord.js ](https://discord.js.org/)
+- [Discord.js ](https://discord.js.org/)
