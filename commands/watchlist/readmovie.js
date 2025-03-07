@@ -3,7 +3,7 @@ const jsonfile = require('jsonfile');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('readmovie')
+        .setName('readmovies')
         .setDescription('Lists all the movies in the watchlist!'),
     async execute(interaction) {
         jsonfile.readFile('movies.json', function (err, movieList) {
@@ -20,7 +20,7 @@ module.exports = {
 
             // Create fields for each movie
             const fields = movieList.map(movie => ({
-                name: movie.Movie,
+                name: `**${movie.Movie}**`, // Make the movie title bold
                 value: `Added by: ${movie['Added By']}\nDate Added: ${movie['Date Added']}`,
                 inline: true
             }));
