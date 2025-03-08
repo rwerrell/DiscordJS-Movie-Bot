@@ -19,11 +19,14 @@ module.exports = {
             }
 
             // Create fields for each movie
-            const fields = movieList.map(movie => ({
-                name: `**${movie.Movie}**`, // Make the movie title bold
-                value: `Added by: ${movie['Added By']}\nDate Added: ${movie['Date Added']}`,
-                inline: true
-            }));
+            const fields = movieList.map(movie => {
+                const movieURL = `https://www.google.com/search?q=${movie.Movie.replace(/\s/g, '+')}`;
+                return {
+                    name: `**${movie.Movie}**`, // Make the movie title bold
+                    value: `Added by: ${movie['Added By']}\nDate Added: ${movie['Date Added']}\n[Search](${movieURL})`,
+                    inline: true
+                };
+            });
 
             var MovieListEmbed = new EmbedBuilder()
                 .setColor('DarkGreen')
