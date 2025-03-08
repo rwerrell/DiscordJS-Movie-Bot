@@ -20,7 +20,6 @@ module.exports = {
             .setDescription(`Movie above added to the watchlist`)
             .setURL(`https://www.google.com/search?q=${movieURL}`)
             .setAuthor({name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({extension: 'png'})}`});
-        await interaction.reply({ embeds: [MovieEmbed] });
 
         var data = {
             "Movie" : `${movie}`,
@@ -35,6 +34,7 @@ module.exports = {
                 movies = [];
             } else if (err) {
                 console.error(err);
+                interaction.reply({ content: 'An error occurred while reading the watchlist.', ephemeral: true });
                 return;
             } else {
                 try {
@@ -46,8 +46,15 @@ module.exports = {
                     }
                 } catch (parseErr) {
                     console.error('Error parsing JSON:', parseErr);
-                    movies = [];
+                    interaction.reply({ content: 'An error occurred while parsing the watchlist.', ephemeral: true });
+                    return;
                 }
+            }
+
+            // Check if the movie already exists in the list
+            if (movies.some(m => m.Movie.toLowerCase() === movie.toLowerCase())) {
+                interaction.reply({ content: `The movie "${movie}" is already in the watchlist.`, ephemeral: true });
+                return;
             }
 
             // Add the new movie to the array
@@ -55,7 +62,14 @@ module.exports = {
 
             // Write the updated array back to the file
             fs.writeFile('movies.json', JSON.stringify(movies, null, 2), (err) => {
-                if (err) console.error(err);
+                if (err) {
+                    console.error(err);
+                    interaction.reply({ content: 'An error occurred while updating the watchlist.', ephemeral: true });
+                    return;
+                }
+
+                // Send a confirmation message
+                interaction.reply({ embeds: [MovieEmbed] });
             });
         });
     },
