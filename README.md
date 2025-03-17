@@ -25,3 +25,15 @@ A Simple discord bot that allows users to add and edit an existing movie list on
 ## Framework
 
 - [Discord.js ](https://discord.js.org/)
+
+## Todo
+
+- [x] Add a command to delete a movie from the watchlist.#
+- [x] Add a command to add a movie to the watchlist.
+- [x] Add a command to list all the movies in the watchlist.
+- [x] Add a command to select a random movie from the watchlist.
+- [ ] Add a command to edit a movie in the watchlist.
+- [ ] Add a command to mark a movie as seen.
+- [ ] Add a ranking system for seen movies.
+- [ ] Add a command to see the ranking of seen movies.
+- [ ] Add a voting system for picking a movie to watch next.
