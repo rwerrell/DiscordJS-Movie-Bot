@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "discord.js": "^14.18.0",
-    "jsonfile": "^6.1.0"
+    "jsonfile": "^6.1.0",
+    "pagination.djs": "^4.0.17"
   }
 }
