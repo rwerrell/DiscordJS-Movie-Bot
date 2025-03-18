@@ -26,6 +26,8 @@ A Simple discord bot that allows users to add and edit an existing movie list on
 
 - [Discord.js ](https://discord.js.org/)
 
+- [pagination.djs](https://pagination-djs.js.org/)
+
 ## Todo
 
 - [x] Add a command to delete a movie from the watchlist.#
