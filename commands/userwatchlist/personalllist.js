@@ -4,10 +4,10 @@ const { Pagination } = require('pagination.djs');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('watchlist')
-        .setDescription('Lists all the movies in the watchlist!'),
+        .setName('mywatchlist')
+        .setDescription('Lists all the movies you added to the watchlist!'),
     async execute(interaction) {
-        jsonfile.readFile('movies.json', function (err, movieList) {
+        jsonfile.readFile('watchlist.json', function (err, movieList) {
             if (err) {
                 console.error(err);
                 interaction.reply({ content: 'An error occurred while reading the watchlist.', ephemeral: true });
@@ -27,8 +27,17 @@ module.exports = {
                 return;
             }
 
+            const userMovies = movieList.filter(movie => movie['Added By'] === interaction.user.username);
+
+            if (userMovies.length === 0) {
+                interaction.reply({ content: 'You have not added any movies to the watchlist.', ephemeral: true });
+                return;
+            }
+
             // Create fields for each movie
-            const fields = movieList.map(movie => {
+            const fields = userMovies
+            .filter(movie => movie['Added By'] === interaction.user.username) // Filter movies added by the user
+            .map(movie => {
                 const movieURL = `https://www.google.com/search?q=${movie.Movie.replace(/\s/g, '+')}`;
                 return {
                     name: `**${movie.Movie}**`, // Make the movie title bold
@@ -43,6 +52,7 @@ module.exports = {
                 .setTitle('Kitten Cave Movie Watchlist')
                 .setColor('#00ff00')
                 .addFields(fields)
+                .setDescription (`Total movies added: ${userMovies.length}`)
                 .setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ extension: 'png' })}` })
                 .paginateFields(true);
 

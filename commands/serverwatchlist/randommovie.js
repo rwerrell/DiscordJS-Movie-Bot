@@ -3,10 +3,10 @@ const jsonfile = require('jsonfile');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('randommovieselect')
+        .setName('randommovie')
         .setDescription('Selects a random movie from the watchlist!'),
     async execute(interaction) {
-        jsonfile.readFile('movies.json', function (err, movieList) {
+        jsonfile.readFile('watchlist.json', function (err, movieList) {
             if (err) {
                 console.error(err);
                 interaction.reply({ content: 'An error occurred while reading the watchlist.', ephemeral: true });

@@ -27,7 +27,7 @@ module.exports = {
             "Date Added" : `${interaction.createdAt.toLocaleString()}`
         };
 
-        fs.readFile('movies.json', 'utf8', (err, jsonString) => {
+        fs.readFile('watchlist.json', 'utf8', (err, jsonString) => {
             let movies;
             if (err && err.code === 'ENOENT') {
                 // File does not exist, create a new array
@@ -61,7 +61,7 @@ module.exports = {
             movies.push(data);
 
             // Write the updated array back to the file
-            fs.writeFile('movies.json', JSON.stringify(movies, null, 2), (err) => {
+            fs.writeFile('watchlist.json', JSON.stringify(movies, null, 2), (err) => {
                 if (err) {
                     console.error(err);
                     interaction.reply({ content: 'An error occurred while updating the watchlist.', ephemeral: true });

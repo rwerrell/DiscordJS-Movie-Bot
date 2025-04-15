@@ -10,11 +10,13 @@ module.exports = {
                 .setDescription('The movie you want to delete.')
                 .setRequired(true)
                 .setMaxLength(32)
+                .setAutocomplete(true)
                 .setMinLength(1)),
+                
     async execute(interaction) {
         const movieToDelete = interaction.options.getString('input');
 
-        jsonfile.readFile('movies.json', function (err, movieList) {
+        jsonfile.readFile('watchlist.json', function (err, movieList) {
             if (err) {
                 console.error(err);
                 return;
@@ -37,7 +39,7 @@ module.exports = {
             }
 
             // Write the updated array back to the file
-            jsonfile.writeFile('movies.json', updatedMovieList, { spaces: 2 }, function (err) {
+            jsonfile.writeFile('watchlist.json', updatedMovieList, { spaces: 2 }, function (err) {
                 if (err) {
                     console.error(err);
                     return;
